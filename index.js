@@ -18,7 +18,8 @@ mongoose.connect(process.env.MONGO_URI)
 
 // RUTAS DE LA API
 app.use('/api/usuarios', require('./routes/usuario_Routes'));
-app.use('/api/sesiones', require('./routes/sesionRoutes'));
+app.use('/api/sesiones', require('./routes/sesion_Routes'));
+app.use('/api/ejercicios', require('./routes/ejercicios_Routes'));
 
 // Ruta de prueba inicial
 app.get('/', (req, res) => {
