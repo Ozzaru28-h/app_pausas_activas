@@ -8,8 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.pausasactivas.ui.camera.CameraScreen
-import com.example.pausasactivas.ui.components.CameraPermissionWrapper
+import com.example.pausasactivas.ui.PausasApp
 import com.example.pausasactivas.ui.theme.PausasActivasTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,9 +21,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    CameraPermissionWrapper {
-                        CameraScreen()
-                    }
+                    PausasApp()
                 }
             }
         }

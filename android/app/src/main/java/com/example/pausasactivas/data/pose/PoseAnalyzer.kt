@@ -21,10 +21,17 @@ class PoseAnalyzer(
 
     private val poseDetector = PoseDetection.getClient(options)
 
+    @Volatile
+    private var isClosed = false
+
     @SuppressLint("UnsafeOptInUsageError")
     override fun analyze(imageProxy: ImageProxy) {
         val mediaImage = imageProxy.image
-        if (mediaImage != null) {
+        if (mediaImage == null || isClosed) {
+            imageProxy.close()
+            return
+        }
+        try {
             val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
             poseDetector.process(image)
                 .addOnSuccessListener { pose ->
@@ -35,11 +42,19 @@ class PoseAnalyzer(
                     onPoseDetected(null)
                 }
                 .addOnCompleteListener {
+                    // Siempre se libera el frame; si no, la cámara deja de entregar imágenes.
                     imageProxy.close()
                 }
-        } else {
+        } catch (e: Exception) {
             imageProxy.close()
+            onPoseDetected(null)
         }
+    }
+
+    /** Libera el detector de ML Kit. Llamar cuando la pantalla de cámara se destruye. */
+    fun close() {
+        isClosed = true
+        poseDetector.close()
     }
 
     private fun mapMlKitPoseToDetectedPose(pose: Pose): DetectedPose? {
@@ -69,7 +84,10 @@ class PoseAnalyzer(
             leftKnee = getPoint(PoseLandmark.LEFT_KNEE),
             rightKnee = getPoint(PoseLandmark.RIGHT_KNEE),
             leftAnkle = getPoint(PoseLandmark.LEFT_ANKLE),
-            rightAnkle = getPoint(PoseLandmark.RIGHT_ANKLE)
+            rightAnkle = getPoint(PoseLandmark.RIGHT_ANKLE),
+            nose = getPoint(PoseLandmark.NOSE),
+            leftEar = getPoint(PoseLandmark.LEFT_EAR),
+            rightEar = getPoint(PoseLandmark.RIGHT_EAR)
         )
     }
 }

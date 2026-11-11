@@ -12,6 +12,8 @@ data class PoseLandmarkPoint(
 
 /**
  * Puntos clave principales de la postura corporal detectada.
+ * (nose, leftEar y rightEar se añadieron para el ejercicio de cuello; van al final
+ * con valor por defecto para no romper el código existente).
  */
 data class DetectedPose(
     val leftShoulder: PoseLandmarkPoint? = null,
@@ -25,18 +27,8 @@ data class DetectedPose(
     val leftKnee: PoseLandmarkPoint? = null,
     val rightKnee: PoseLandmarkPoint? = null,
     val leftAnkle: PoseLandmarkPoint? = null,
-    val rightAnkle: PoseLandmarkPoint? = null
-)
-
-/**
- * Estado general de la sesión de pausas activas.
- */
-data class ActivePauseState(
-    val isPersonDetected: Boolean = false,
-    val exerciseName: String = "Estiramiento de Brazos",
-    val repetitionCount: Int = 0,
-    val targetRepetitions: Int = 10,
-    val feedbackMessage: String = "Colócate frente a la cámara",
-    val isCompleted: Boolean = false,
-    val pose: DetectedPose? = null
+    val rightAnkle: PoseLandmarkPoint? = null,
+    val nose: PoseLandmarkPoint? = null,
+    val leftEar: PoseLandmarkPoint? = null,
+    val rightEar: PoseLandmarkPoint? = null
 )
