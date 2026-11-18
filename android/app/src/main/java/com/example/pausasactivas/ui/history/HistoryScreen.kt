@@ -280,16 +280,30 @@ private fun SessionCard(session: SessionDto) {
     }
 }
 
-/** Convierte "2026-11-10T18:05:00.000Z" a "10/11/2026 13:05" (hora local del teléfono). */
+/** Zona horaria en la que se muestran las fechas (igual que en la web). */
+private val BOGOTA: TimeZone = TimeZone.getTimeZone("America/Bogota")
+
+/**
+ * Convierte "2026-11-10T18:05:00.000Z" (fecha_registro en UTC) a "10/11/2026 01:05 p. m."
+ * en hora de Colombia.
+ */
 private fun formatDate(iso: String?): String {
     if (iso.isNullOrBlank()) return "Fecha desconocida"
-    return try {
-        val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US).apply {
-            timeZone = TimeZone.getTimeZone("UTC")
+    val patterns = listOf("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "yyyy-MM-dd'T'HH:mm:ss'Z'")
+    for (pattern in patterns) {
+        try {
+            val parser = SimpleDateFormat(pattern, Locale.US).apply {
+                timeZone = TimeZone.getTimeZone("UTC")
+                isLenient = false
+            }
+            val date = parser.parse(iso) ?: continue
+            return SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.forLanguageTag("es-CO")).apply {
+                timeZone = BOGOTA
+            }.format(date)
+        } catch (e: Exception) {
+            // probar el siguiente formato
         }
-        val date = parser.parse(iso) ?: return iso
-        SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.forLanguageTag("es-CO")).format(date)
-    } catch (e: Exception) {
-        iso.take(16).replace('T', ' ')
     }
+    // Formato desconocido (p. ej. una fecha antigua guardada como texto): se muestra tal cual.
+    return iso
 }

@@ -13,12 +13,11 @@ const sesionSchema = new mongoose.Schema({
     type: String, 
     required: [true, 'El ID del usuario es obligatorio'] 
   },
+  // Se guarda como Date (UTC) para poder ordenar y buscar por rango de fechas.
+  // La hora de Colombia se muestra al formatear (web y Android usan America/Bogota).
   fecha_registro: {
-    type: String,
-    default: () => new Date().toLocaleString('es-CO', {
-      timeZone: 'America/Bogota',
-      hour12: true 
-    })
+    type: Date,
+    default: Date.now
   },
   ejercicio: {
     codigo: { type: String, required: true },
