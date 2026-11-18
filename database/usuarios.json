@@ -1,0 +1,50 @@
+[
+  {
+    "_id": {
+      "$oid": "6ace2b26cc807481a7f5efd4"
+    },
+    "correo": "juan.andres.bustamante@uniautonoma.edu.co",
+    "nombre": "Juan Andrés Bustamante",
+    "carrera": "Ingeniería de Sistemas",
+    "fecha_registro": {
+      "$date": {
+        "$numberLong": "1791896358157"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6acf8db17e9c56e6d39c3d6c"
+    },
+    "correo": "alejandro.hurtado.m@uniautonoma.edu.co",
+    "nombre": "Alejandro Hurtado Martínez",
+    "carrera": "Ingeniería de Sistemas",
+    "fecha_registro": {
+      "$date": {
+        "$numberLong": "1791987121355"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6acfd427d0b650608931bbf0"
+    },
+    "correo": "isabela.hurtado@uniautonoma.edu.co",
+    "nombre": "Isabela Hurtado",
+    "carrera": "Licenciatura Infatil",
+    "fecha_registro": {
+      "$date": {
+        "$numberLong": "1792005159366"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  }
+]

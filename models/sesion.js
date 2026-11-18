@@ -13,12 +13,11 @@ const sesionSchema = new mongoose.Schema({
     type: String, 
     required: [true, 'El ID del usuario es obligatorio'] 
   },
+  // Se guarda como Date (ISO en el JSON) para poder filtrar por rango de fechas.
+  // La app Android y la web formatean la fecha a hora local al mostrarla.
   fecha_registro: {
-    type: String,
-    default: () => new Date().toLocaleString('es-CO', {
-      timeZone: 'America/Bogota',
-      hour12: true 
-    })
+    type: Date,
+    default: Date.now
   },
   ejercicio: {
     codigo: { type: String, required: true },

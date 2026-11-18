@@ -1,0 +1,118 @@
+[
+  {
+    "_id": {
+      "$oid": "6af4948ecb7d5d496958a411"
+    },
+    "usuario_id": "6acf8db17e9c56e6d39c3d6c",
+    "ejercicio": {
+      "codigo": "ELEVACION_BRAZOS",
+      "nombre": "Elevación de brazos y hombros"
+    },
+    "telemetria_ia": {
+      "postura_valida": true,
+      "precision_promedio_pct": {
+        "$numberDouble": "65.6"
+      },
+      "metricas_error": [
+        {
+          "articulacion_falla": "Codo derecho",
+          "angulo_detectado": {
+            "$numberDouble": "94.8"
+          },
+          "angulo_esperado": {
+            "$numberInt": "150"
+          }
+        }
+      ]
+    },
+    "notas_usuario": "",
+    "fecha_registro": {
+      "$date": {
+        "$numberLong": "1794413710773"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6af4bc62d13d5ee67e075c03"
+    },
+    "usuario_id": "6acf8db17e9c56e6d39c3d6c",
+    "ejercicio": {
+      "codigo": "CUELLO_LATERAL",
+      "nombre": "Movilidad de cuello"
+    },
+    "telemetria_ia": {
+      "postura_valida": true,
+      "precision_promedio_pct": {
+        "$numberInt": "96"
+      },
+      "metricas_error": []
+    },
+    "notas_usuario": "",
+    "fecha_registro": {
+      "$date": {
+        "$numberLong": "1794423906583"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6af4cb102c37c3a9e6d41fd4"
+    },
+    "usuario_id": "6acf8db17e9c56e6d39c3d6c",
+    "ejercicio": {
+      "codigo": "CUELLO_LATERAL",
+      "nombre": "Movilidad de cuello"
+    },
+    "telemetria_ia": {
+      "postura_valida": true,
+      "precision_promedio_pct": {
+        "$numberInt": "100"
+      },
+      "metricas_error": []
+    },
+    "notas_usuario": "",
+    "fecha_registro": "11/11/2026, 3:07:44 p. m.",
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6afddfb412d6ddedb7eea643"
+    },
+    "usuario_id": "6acf8db17e9c56e6d39c3d6c",
+    "ejercicio": {
+      "codigo": "ELEVACION_BRAZOS",
+      "nombre": "Elevación de brazos y hombros"
+    },
+    "telemetria_ia": {
+      "postura_valida": false,
+      "precision_promedio_pct": {
+        "$numberDouble": "2.6"
+      },
+      "metricas_error": [
+        {
+          "articulacion_falla": "Codo izquierdo",
+          "angulo_detectado": {
+            "$numberDouble": "71.4"
+          },
+          "angulo_esperado": {
+            "$numberInt": "150"
+          }
+        }
+      ]
+    },
+    "notas_usuario": "",
+    "fecha_registro": "18/11/2026, 12:26:12 p. m.",
+    "__v": {
+      "$numberInt": "0"
+    }
+  }
+]

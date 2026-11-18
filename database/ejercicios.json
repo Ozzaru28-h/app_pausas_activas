@@ -1,0 +1,70 @@
+[
+  {
+    "_id": {
+      "$oid": "6acf8ac87e9c56e6d39c3d6a"
+    },
+    "codigo": "EJ-01",
+    "nombre": "Estiramiento de Codo",
+    "descripcion": "Estiramiento de tríceps y extensión de brazo",
+    "angulo_optimo_min": {
+      "$numberInt": "160"
+    },
+    "angulo_optimo_max": {
+      "$numberInt": "180"
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6acf93407e9c56e6d39c3d6d"
+    },
+    "codigo": "EJ-02",
+    "nombre": "Estiramiento de Cuello",
+    "descripcion": "Inclinación lateral para relajar la cervical",
+    "angulo_optimo_min": {
+      "$numberInt": "35"
+    },
+    "angulo_optimo_max": {
+      "$numberInt": "50"
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6acf93a57e9c56e6d39c3d6e"
+    },
+    "codigo": "EJ-03",
+    "nombre": "Levantamiento Puntas",
+    "descripcion": "Levantar los talones del piso mientras pisamos las puntas de los pies",
+    "angulo_optimo_min": {
+      "$numberInt": "45"
+    },
+    "angulo_optimo_max": {
+      "$numberInt": "80"
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6acfd4c2d0b650608931bbf1"
+    },
+    "codigo": "EJ-04",
+    "nombre": "Sentadilla",
+    "descripcion": "flexión de rollida sencilla sin peso",
+    "angulo_optimo_min": {
+      "$numberInt": "90"
+    },
+    "angulo_optimo_max": {
+      "$numberInt": "80"
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  }
+]

@@ -1,4 +1,5 @@
 const Sesion = require('../models/sesion');
+const { parseFechaRegistro, normalizarSesion } = require('../utils/fechas');
 
 // @desc    1. Registrar una nueva sesión con telemetría de IA (HU-07)
 // @route   POST /api/sesiones
@@ -39,24 +40,35 @@ exports.obtenerSesionesPorUsuario = async (req, res) => {
     const filtro = { usuario_id: req.params.usuario_id };
     const { desde, hasta, ejercicio } = req.query;
 
-    if (desde || hasta) {
-      filtro.fecha_registro = {};
-      if (desde) {
-        const d = new Date(desde);
-        if (isNaN(d)) return res.status(400).json({ mensaje: 'El parámetro "desde" no es una fecha válida.' });
-        filtro.fecha_registro.$gte = d;
-      }
-      if (hasta) {
-        const h = new Date(hasta);
-        if (isNaN(h)) return res.status(400).json({ mensaje: 'El parámetro "hasta" no es una fecha válida.' });
-        filtro.fecha_registro.$lte = h;
-      }
+    let desdeDate = null;
+    let hastaDate = null;
+    if (desde) {
+      desdeDate = new Date(desde);
+      if (isNaN(desdeDate)) return res.status(400).json({ mensaje: 'El parámetro "desde" no es una fecha válida.' });
+    }
+    if (hasta) {
+      hastaDate = new Date(hasta);
+      if (isNaN(hastaDate)) return res.status(400).json({ mensaje: 'El parámetro "hasta" no es una fecha válida.' });
     }
     if (ejercicio) {
       filtro['ejercicio.codigo'] = String(ejercicio);
     }
 
-    const sesiones = await Sesion.find(filtro).sort({ fecha_registro: -1 });
+    // El rango de fechas se aplica en memoria porque hay registros antiguos con
+    // fecha_registro guardada como texto ("18/11/2026, 12:26:12 p. m."); con un
+    // $gte/$lte de MongoDB esos se comparaban como cadenas y "desde" no encontraba nada.
+    const sesiones = (await Sesion.find(filtro).lean())
+      .map((s) => ({ sesion: s, fecha: parseFechaRegistro(s.fecha_registro) }))
+      .filter(({ fecha }) => {
+        if (!desdeDate && !hastaDate) return true;
+        if (!fecha) return false;
+        if (desdeDate && fecha < desdeDate) return false;
+        if (hastaDate && fecha > hastaDate) return false;
+        return true;
+      })
+      .sort((a, b) => (b.fecha?.getTime() ?? 0) - (a.fecha?.getTime() ?? 0))
+      .map(({ sesion }) => normalizarSesion(sesion));
+
     res.status(200).json({ exito: true, total: sesiones.length, datos: sesiones });
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al consultar sesiones del usuario', error: error.message });
@@ -67,11 +79,11 @@ exports.obtenerSesionesPorUsuario = async (req, res) => {
 // @route   GET /api/sesiones/:id
 exports.obtenerSesionPorId = async (req, res) => {
   try {
-    const sesion = await Sesion.findById(req.params.id);
+    const sesion = await Sesion.findById(req.params.id).lean();
     if (!sesion) {
       return res.status(404).json({ mensaje: 'Sesión no encontrada' });
     }
-    res.status(200).json({ exito: true, datos: sesion });
+    res.status(200).json({ exito: true, datos: normalizarSesion(sesion) });
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al consultar la sesión', error: error.message });
   }
@@ -86,11 +98,11 @@ exports.actualizarNotasSesion = async (req, res) => {
       req.params.id,
       { notas_usuario },
       { new: true }
-    );
+    ).lean();
     if (!sesionActualizada) {
       return res.status(404).json({ mensaje: 'Sesión no encontrada' });
     }
-    res.status(200).json({ exito: true, mensaje: 'Notas actualizadas correctamente', datos: sesionActualizada });
+    res.status(200).json({ exito: true, mensaje: 'Notas actualizadas correctamente', datos: normalizarSesion(sesionActualizada) });
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al actualizar notas de la sesión', error: error.message });
   }
